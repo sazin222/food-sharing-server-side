@@ -40,6 +40,12 @@ app.get('/foods', async(req,res)=>{
   
   }) 
 
+  app.get('/foods/short', async(req,res)=>{
+    const coursor= foodsCollection.find().sort({ foodQuantity: -1 }).limit(6);
+    const result = await coursor.toArray()
+    res.send(result)
+  })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
