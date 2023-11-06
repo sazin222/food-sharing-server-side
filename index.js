@@ -60,7 +60,8 @@ app.get('/foods', async(req,res)=>{
   }) 
     
 app.get('/managefoods', async(req,res)=>{
-    const coursor= foodsCollection.find()
+  query={email: req.query.email}
+    const coursor= foodsCollection.find(query)
     const result = await coursor.toArray()
     res.send(result)
   
