@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 const port= process.env.PORT || 5000 
@@ -40,7 +40,14 @@ app.get('/foods', async(req,res)=>{
   
   }) 
 
-  app.get('/foods/short', async(req,res)=>{
+  app.get('/fooddetails/:id', async(req,res)=>{
+    const id= req.params.id
+    const query={_id: new ObjectId(id)}
+    const result= await foodsCollection.findOne(query)
+    res.send(result)
+    
+  })
+ app.get('/foods/short', async(req,res)=>{
     const coursor= foodsCollection.find().sort({ foodQuantity: -1 }).limit(6);
     const result = await coursor.toArray()
     res.send(result)
