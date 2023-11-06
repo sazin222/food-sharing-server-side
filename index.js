@@ -32,6 +32,12 @@ async function run() {
     // await client.connect();
     const foodsCollection= client.db('foodDB').collection('foods')
 
+   
+app.post('/food', async(req,res)=>{
+  const foodDetails= req.body
+  const result= await foodsCollection.insertOne(foodDetails)
+  res.send(result)
+}) 
     
 app.get('/foods', async(req,res)=>{
     const coursor= foodsCollection.find()
