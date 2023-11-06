@@ -40,6 +40,26 @@ app.post('/food', async(req,res)=>{
 }) 
     
 app.get('/foods', async(req,res)=>{
+
+  let queryObj={}
+  let sortObj={}
+  const foodName= req.query.foodName
+  const sortField= req.query.sortField
+  const sortOrder= req.query.sortOrder
+  console.log(sortField);
+  if(foodName){
+    queryObj.foodName= foodName
+  }
+  if(sortField && sortOrder){
+    sortObj[sortField]= sortOrder
+  }
+    const coursor= foodsCollection.find(queryObj).sort(sortObj)
+    const result = await coursor.toArray()
+    res.send(result)
+  
+  }) 
+    
+app.get('/managefoods', async(req,res)=>{
     const coursor= foodsCollection.find()
     const result = await coursor.toArray()
     res.send(result)
