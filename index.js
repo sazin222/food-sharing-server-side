@@ -39,6 +39,16 @@ app.post('/foodRequest', async(req,res)=>{
   const result= await foodRequestCollection.insertOne(foodDetails)
   res.send(result)
 }) 
+
+app.delete('/foodRequests/:id', async(req,res)=>{
+  const id= req.params.id 
+  const query= {_id: new ObjectId(id)}
+  const result= await foodRequestCollection.deleteOne(query)
+  res.send(result)
+})
+
+
+
 app.post('/food', async(req,res)=>{
   const foodDetails= req.body
   const result= await foodsCollection.insertOne(foodDetails)
@@ -68,6 +78,15 @@ app.get('/foods', async(req,res)=>{
 app.get('/managefoods', async(req,res)=>{
   query={email: req.query.email}
     const coursor= foodsCollection.find(query)
+    const result = await coursor.toArray()
+    res.send(result)
+  
+  }) 
+
+     
+app.get('/requestfood', async(req,res)=>{
+  query={email: req.query.email}
+    const coursor= foodRequestCollection.find(query)
     const result = await coursor.toArray()
     res.send(result)
   
