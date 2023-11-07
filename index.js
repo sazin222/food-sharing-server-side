@@ -83,6 +83,28 @@ app.get('/managefoods', async(req,res)=>{
   
   }) 
 
+
+  app.put('/foodUpdate/:id', async(req,res)=>{
+    const id = req.params.id
+    console.log(id);
+    const filter ={_id: new ObjectId(id) }
+    const UpdateFood= req.body
+    const options = { upsert: true };
+    const Product= {
+      $set:{
+        foodName: UpdateFood.foodName,
+        foodImage: UpdateFood.foodImage,
+        foodQuantity: UpdateFood.foodQuantity,
+        pickupLocation: UpdateFood.pickupLocation,
+        additionalNotes: UpdateFood.additionalNotes,
+        expireddate: UpdateFood.expireddate,
+        
+      }
+    }
+    const result = await foodsCollection.updateOne(filter,Product,options) 
+    res.send(result)
+  })
+
      
 app.get('/requestfood', async(req,res)=>{
   query={email: req.query.email}
