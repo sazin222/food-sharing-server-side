@@ -104,7 +104,14 @@ app.delete('/foodRequests/:id', async(req,res)=>{
 
 app.delete('/foodDelete/:id', async(req,res)=>{
   const id= req.params.id 
-  const query= {_id: new ObjectId(id)}
+  const query= {_id: id}
+  const result= await foodsCollection.deleteOne(query)
+  res.send(result)
+})
+
+app.delete('/foodDelivery/:foodName', async(req,res)=>{
+  const foodName= req.params.foodName 
+  const query= {foodName: foodName}
   const result= await foodsCollection.deleteOne(query)
   res.send(result)
 })
