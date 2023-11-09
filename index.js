@@ -12,7 +12,7 @@ const port= process.env.PORT || 5000
 
 // middleware 
 app.use(cors({
-  origin:['http://localhost:5173'],
+  origin:['https://courageous-monstera-8f7298.netlify.app'],
   credentials:true 
 }))
 // app.use(cors())
@@ -124,7 +124,7 @@ app.get('/foods', async(req,res)=>{
   const sortOrder= req.query.sortOrder
   console.log(sortField);
   if(foodName){
-    queryObj.foodName= foodName
+    queryObj.foodName= { $regex: new RegExp(foodName, 'i') };
   }
   if(sortField && sortOrder){
     sortObj[sortField]= sortOrder
@@ -214,6 +214,4 @@ app.get('/',(req,res)=>{
 app.listen(port,()=>{
     console.log(`community food sharing  is running on port : ${port}`);
 })
-
-
 
